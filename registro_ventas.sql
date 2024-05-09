@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 09-05-2024 a las 18:06:45
+-- Tiempo de generación: 09-05-2024 a las 19:31:56
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -108,17 +108,6 @@ CREATE TABLE `tb_factura` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tb_logeo`
---
-
-CREATE TABLE `tb_logeo` (
-  `usuario_logeo` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `contra_logeo` varchar(30) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `tb_mueble`
 --
 
@@ -159,6 +148,17 @@ CREATE TABLE `tb_mueble_pedido` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tb_operaciones`
+--
+
+CREATE TABLE `tb_operaciones` (
+  `cod_oper` int NOT NULL,
+  `nom_oper` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tb_pedidos`
 --
 
@@ -167,6 +167,29 @@ CREATE TABLE `tb_pedidos` (
   `id_emple_fk` int NOT NULL,
   `id_clie_fk` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_rol`
+--
+
+CREATE TABLE `tb_rol` (
+  `cod_rol` int NOT NULL,
+  `nom_rol` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_rol_operacion`
+--
+
+CREATE TABLE `tb_rol_operacion` (
+  `cod_operacion` int NOT NULL,
+  `fk_cod_rol` int NOT NULL,
+  `fk_cod_oper` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -197,6 +220,21 @@ CREATE TABLE `tb_tienda_empleado` (
   `id_tiend_fk` int NOT NULL,
   `id_emple_fk` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_usuario`
+--
+
+CREATE TABLE `tb_usuario` (
+  `cod_user` int NOT NULL,
+  `nom_user` varchar(200) NOT NULL,
+  `email_user` varchar(200) NOT NULL,
+  `contra_user` varchar(200) NOT NULL,
+  `fecha_user_crea` datetime DEFAULT NULL,
+  `fk_cod_rol` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Índices para tablas volcadas
@@ -262,12 +300,32 @@ ALTER TABLE `tb_mueble_pedido`
   ADD KEY `cod_pedid_fk` (`cod_pedid_fk`);
 
 --
+-- Indices de la tabla `tb_operaciones`
+--
+ALTER TABLE `tb_operaciones`
+  ADD PRIMARY KEY (`cod_oper`);
+
+--
 -- Indices de la tabla `tb_pedidos`
 --
 ALTER TABLE `tb_pedidos`
   ADD PRIMARY KEY (`cod_pedid`),
   ADD KEY `id_emple_fk` (`id_emple_fk`),
   ADD KEY `id_clie_fk` (`id_clie_fk`);
+
+--
+-- Indices de la tabla `tb_rol`
+--
+ALTER TABLE `tb_rol`
+  ADD PRIMARY KEY (`cod_rol`);
+
+--
+-- Indices de la tabla `tb_rol_operacion`
+--
+ALTER TABLE `tb_rol_operacion`
+  ADD PRIMARY KEY (`cod_operacion`),
+  ADD KEY `fk_cod_rol` (`fk_cod_rol`),
+  ADD KEY `fk_cod_oper` (`fk_cod_oper`);
 
 --
 -- Indices de la tabla `tb_tienda`
@@ -282,6 +340,41 @@ ALTER TABLE `tb_tienda`
 ALTER TABLE `tb_tienda_empleado`
   ADD KEY `id_tiend_fk` (`id_tiend_fk`),
   ADD KEY `id_emple_fk` (`id_emple_fk`);
+
+--
+-- Indices de la tabla `tb_usuario`
+--
+ALTER TABLE `tb_usuario`
+  ADD PRIMARY KEY (`cod_user`),
+  ADD KEY `fk_cod_rol` (`fk_cod_rol`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `tb_operaciones`
+--
+ALTER TABLE `tb_operaciones`
+  MODIFY `cod_oper` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_rol`
+--
+ALTER TABLE `tb_rol`
+  MODIFY `cod_rol` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_rol_operacion`
+--
+ALTER TABLE `tb_rol_operacion`
+  MODIFY `cod_operacion` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_usuario`
+--
+ALTER TABLE `tb_usuario`
+  MODIFY `cod_user` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -322,6 +415,13 @@ ALTER TABLE `tb_pedidos`
   ADD CONSTRAINT `tb_pedidos_ibfk_2` FOREIGN KEY (`id_clie_fk`) REFERENCES `tb_cliente` (`id_clie`);
 
 --
+-- Filtros para la tabla `tb_rol_operacion`
+--
+ALTER TABLE `tb_rol_operacion`
+  ADD CONSTRAINT `tb_rol_operacion_ibfk_1` FOREIGN KEY (`fk_cod_rol`) REFERENCES `tb_rol` (`cod_rol`),
+  ADD CONSTRAINT `tb_rol_operacion_ibfk_2` FOREIGN KEY (`fk_cod_oper`) REFERENCES `tb_operaciones` (`cod_oper`);
+
+--
 -- Filtros para la tabla `tb_tienda`
 --
 ALTER TABLE `tb_tienda`
@@ -333,6 +433,12 @@ ALTER TABLE `tb_tienda`
 ALTER TABLE `tb_tienda_empleado`
   ADD CONSTRAINT `tb_tienda_empleado_ibfk_1` FOREIGN KEY (`id_tiend_fk`) REFERENCES `tb_tienda` (`id_tiend`),
   ADD CONSTRAINT `tb_tienda_empleado_ibfk_2` FOREIGN KEY (`id_emple_fk`) REFERENCES `tb_empleado` (`id_emple`);
+
+--
+-- Filtros para la tabla `tb_usuario`
+--
+ALTER TABLE `tb_usuario`
+  ADD CONSTRAINT `tb_usuario_ibfk_1` FOREIGN KEY (`fk_cod_rol`) REFERENCES `tb_rol` (`cod_rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
