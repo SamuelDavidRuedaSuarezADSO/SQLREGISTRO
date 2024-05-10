@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 09-05-2024 a las 19:31:56
+-- Tiempo de generación: 10-05-2024 a las 22:13:44
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tb_categoria` (
   `cod_categ` int NOT NULL,
-  `tipo_muebl_categ` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `zona_muebl_categ` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `tipo_muebl_categ` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `zona_muebl_categ` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -41,11 +41,11 @@ CREATE TABLE `tb_categoria` (
 
 CREATE TABLE `tb_cliente` (
   `id_clie` int NOT NULL,
-  `nom_clie` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `apell_clie` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nom_clie` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `apell_clie` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `telf_clie` int NOT NULL,
-  `direcc_clie` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email_clie` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `direcc_clie` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email_clie` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -83,12 +83,12 @@ CREATE TABLE `tb_director` (
 
 CREATE TABLE `tb_empleado` (
   `id_emple` int NOT NULL,
-  `nom_emple` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `apell_emple` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_emple` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `apell_emple` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `telf_emple` int NOT NULL,
-  `direcc_emple` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email_emple` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
-  `zona_emple` varchar(30) COLLATE utf8mb4_general_ci NOT NULL
+  `direcc_emple` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email_emple` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `zona_emple` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -113,11 +113,11 @@ CREATE TABLE `tb_factura` (
 
 CREATE TABLE `tb_mueble` (
   `cod_mueb` int NOT NULL,
-  `nom_mueb` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_mueb` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cod_categ_fk` int NOT NULL,
-  `descr_mueb` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `color_mueb` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `materi_mueb` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `descr_mueb` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `color_mueb` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `materi_mueb` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `press_mueb` float NOT NULL,
   `stok_mueb` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -148,17 +148,6 @@ CREATE TABLE `tb_mueble_pedido` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tb_operaciones`
---
-
-CREATE TABLE `tb_operaciones` (
-  `cod_oper` int NOT NULL,
-  `nom_oper` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `tb_pedidos`
 --
 
@@ -167,6 +156,33 @@ CREATE TABLE `tb_pedidos` (
   `id_emple_fk` int NOT NULL,
   `id_clie_fk` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_perfil`
+--
+
+CREATE TABLE `tb_perfil` (
+  `cod_perfil` int NOT NULL,
+  `nom_prefil` varchar(200) NOT NULL,
+  `apell_perfil` varchar(200) NOT NULL,
+  `emali_perfil` varchar(200) NOT NULL,
+  `direcc_perfil` varchar(200) NOT NULL,
+  `telf_perfil` int NOT NULL,
+  `fk_cod_user` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_permisos`
+--
+
+CREATE TABLE `tb_permisos` (
+  `cod_oper` int NOT NULL,
+  `nom_oper` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -182,11 +198,10 @@ CREATE TABLE `tb_rol` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tb_rol_operacion`
+-- Estructura de tabla para la tabla `tb_rol_permisos`
 --
 
-CREATE TABLE `tb_rol_operacion` (
-  `cod_operacion` int NOT NULL,
+CREATE TABLE `tb_rol_permisos` (
   `fk_cod_rol` int NOT NULL,
   `fk_cod_oper` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -199,12 +214,12 @@ CREATE TABLE `tb_rol_operacion` (
 
 CREATE TABLE `tb_tienda` (
   `id_tiend` int NOT NULL,
-  `nom_tiend` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `direcc_tiend` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
-  `ciudad_tiend` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
-  `depart_tiend` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
-  `pais_tiend` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
-  `email_tiend` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nom_tiend` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `direcc_tiend` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ciudad_tiend` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `depart_tiend` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `pais_tiend` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email_tiend` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `telf_tiend` int NOT NULL,
   `cod_direc_fk` int NOT NULL,
   `estad_tiend` tinyint(1) NOT NULL
@@ -300,12 +315,6 @@ ALTER TABLE `tb_mueble_pedido`
   ADD KEY `cod_pedid_fk` (`cod_pedid_fk`);
 
 --
--- Indices de la tabla `tb_operaciones`
---
-ALTER TABLE `tb_operaciones`
-  ADD PRIMARY KEY (`cod_oper`);
-
---
 -- Indices de la tabla `tb_pedidos`
 --
 ALTER TABLE `tb_pedidos`
@@ -314,16 +323,29 @@ ALTER TABLE `tb_pedidos`
   ADD KEY `id_clie_fk` (`id_clie_fk`);
 
 --
+-- Indices de la tabla `tb_perfil`
+--
+ALTER TABLE `tb_perfil`
+  ADD PRIMARY KEY (`cod_perfil`),
+  ADD UNIQUE KEY `fk_cod_user` (`fk_cod_user`),
+  ADD UNIQUE KEY `fk_cod_user_2` (`fk_cod_user`);
+
+--
+-- Indices de la tabla `tb_permisos`
+--
+ALTER TABLE `tb_permisos`
+  ADD PRIMARY KEY (`cod_oper`);
+
+--
 -- Indices de la tabla `tb_rol`
 --
 ALTER TABLE `tb_rol`
   ADD PRIMARY KEY (`cod_rol`);
 
 --
--- Indices de la tabla `tb_rol_operacion`
+-- Indices de la tabla `tb_rol_permisos`
 --
-ALTER TABLE `tb_rol_operacion`
-  ADD PRIMARY KEY (`cod_operacion`),
+ALTER TABLE `tb_rol_permisos`
   ADD KEY `fk_cod_rol` (`fk_cod_rol`),
   ADD KEY `fk_cod_oper` (`fk_cod_oper`);
 
@@ -353,9 +375,15 @@ ALTER TABLE `tb_usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `tb_operaciones`
+-- AUTO_INCREMENT de la tabla `tb_perfil`
 --
-ALTER TABLE `tb_operaciones`
+ALTER TABLE `tb_perfil`
+  MODIFY `cod_perfil` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_permisos`
+--
+ALTER TABLE `tb_permisos`
   MODIFY `cod_oper` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -363,12 +391,6 @@ ALTER TABLE `tb_operaciones`
 --
 ALTER TABLE `tb_rol`
   MODIFY `cod_rol` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tb_rol_operacion`
---
-ALTER TABLE `tb_rol_operacion`
-  MODIFY `cod_operacion` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_usuario`
@@ -415,11 +437,17 @@ ALTER TABLE `tb_pedidos`
   ADD CONSTRAINT `tb_pedidos_ibfk_2` FOREIGN KEY (`id_clie_fk`) REFERENCES `tb_cliente` (`id_clie`);
 
 --
--- Filtros para la tabla `tb_rol_operacion`
+-- Filtros para la tabla `tb_perfil`
 --
-ALTER TABLE `tb_rol_operacion`
-  ADD CONSTRAINT `tb_rol_operacion_ibfk_1` FOREIGN KEY (`fk_cod_rol`) REFERENCES `tb_rol` (`cod_rol`),
-  ADD CONSTRAINT `tb_rol_operacion_ibfk_2` FOREIGN KEY (`fk_cod_oper`) REFERENCES `tb_operaciones` (`cod_oper`);
+ALTER TABLE `tb_perfil`
+  ADD CONSTRAINT `tb_perfil_ibfk_1` FOREIGN KEY (`fk_cod_user`) REFERENCES `tb_usuario` (`cod_user`);
+
+--
+-- Filtros para la tabla `tb_rol_permisos`
+--
+ALTER TABLE `tb_rol_permisos`
+  ADD CONSTRAINT `tb_rol_permisos_ibfk_1` FOREIGN KEY (`fk_cod_rol`) REFERENCES `tb_rol` (`cod_rol`),
+  ADD CONSTRAINT `tb_rol_permisos_ibfk_2` FOREIGN KEY (`fk_cod_oper`) REFERENCES `tb_permisos` (`cod_oper`);
 
 --
 -- Filtros para la tabla `tb_tienda`

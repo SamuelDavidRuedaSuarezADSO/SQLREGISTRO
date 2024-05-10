@@ -1,0 +1,7 @@
+CREATE TABLE tb_perfil(
+    cod_perfil int not null PRIMARY KEY AUTO_INCREMENT,
+    nom_prefil varchar(200) not null,
+    apell_perfil varchar(200) not null,
+    emali_perfil varchar(200) not null,
+    direcc_perfil varchar(200) not null,
+    telf_perfil int not null);
